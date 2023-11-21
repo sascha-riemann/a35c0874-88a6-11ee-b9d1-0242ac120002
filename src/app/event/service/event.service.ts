@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map, Observable, shareReplay, tap} from "rxjs";
 import {Event, Venue} from '../model/event';
-import {compareDesc, isSameDay, startOfDay} from 'date-fns';
+import {compareAsc, compareDesc, isSameDay, startOfDay} from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,7 @@ export class EventService {
   findAll(search?: string, excludeEventIds: string[] = [], filterVenueIds: string[] = []): Observable<Event[]> {
     return this.events$.pipe(
       map(events => this.filterEvents(events, search, excludeEventIds, filterVenueIds)),
-      map(events => events.sort((eventA, eventB) => compareDesc(new Date(eventA.date), new Date(eventB.date)))),
+      map(events => events.sort((eventA, eventB) => compareAsc(new Date(eventA.date), new Date(eventB.date)))),
     );
   }
 
@@ -82,7 +82,7 @@ export class EventService {
           return days;
         }, [])
       }),
-      map(eventDates => eventDates.sort((eventDateA, eventDateB) => compareDesc(eventDateA.date, eventDateB.date))),
+      map(eventDates => eventDates.sort((eventDateA, eventDateB) => compareAsc(eventDateA.date, eventDateB.date))),
     );
   }
 
