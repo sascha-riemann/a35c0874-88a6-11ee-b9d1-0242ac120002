@@ -1,0 +1,17 @@
+<app-page title="Events finden">
+  <input [formControl]="search" start class="p-2 ps-5 text-sm text-gray-900 border border-gray-200 rounded w-80" placeholder="Search...">
+
+  <app-venue-filter [formControl]="venues"></app-venue-filter>
+
+  <div *ngIf="eventDates$ | async as eventDates">
+    <ng-container *ngFor="let eventDate of eventDates">
+
+      <h3 class="text-xl mt-6 mb-2 sticky top-16 py-2 bg-white">{{ eventDate.date | date: 'dd.MM.yyyy' }}</h3>
+
+      <div class="grid grid-cols-4 gap-4">
+        <app-event-card *ngFor="let event of eventDate.events" [event]="event"></app-event-card>
+      </div>
+
+    </ng-container>
+  </div>
+</app-page>

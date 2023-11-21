@@ -1,0 +1,26 @@
+<button
+  id="dropdownSearchButton"
+  data-dropdown-toggle="dropdownSearch"
+  data-dropdown-placement="bottom"
+  type="button"
+  class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200">
+  Venues filtern
+  <ng-container *ngIf="selectedVenues.length > 0">
+    ({{ selectedVenues.length }})
+  </ng-container>
+</button>
+
+<!-- Dropdown menu -->
+<div id="dropdownSearch" class="z-10 hidden bg-white rounded-lg shadow w-60">
+  <div class="p-3">
+    <input [formControl]="search" type="text" id="input-group-search" class="block w-full p-2 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" placeholder="Durchsuchen">
+  </div>
+  <ul class="h-48 px-3 pb-3 overflow-y-auto text-sm text-gray-700" aria-labelledby="dropdownSearchButton">
+    <li *ngFor="let venue of venues$ | async">
+      <div class="flex items-center ps-2 rounded hover:bg-gray-100">
+        <input (change)="onSelection(venue)" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500">
+        <label class="w-full py-2 ms-2 text-sm font-medium text-gray-900 rounded">{{ venue.name }}</label>
+      </div>
+    </li>
+  </ul>
+</div>
